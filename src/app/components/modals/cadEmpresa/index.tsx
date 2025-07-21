@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Modal, View, Text, TextInput, TouchableOpacity } from "react-native";
 import { styles } from "./style";
-import { MaterialIcons } from "@expo/vector-icons";
 
 type CadEmpresaModalProps = {
   visible: boolean;
