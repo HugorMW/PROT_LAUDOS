@@ -1,10 +1,10 @@
+import Empresas from "@/app/components/empresa";
 import React from "react";
 import { FlatList, Text, View } from "react-native";
-import Empresas from "@/app/components/empresa";
 
 type Empresa = {
   id: string;
-  nome: string;
+  name: string;
   cnpj: string;
   email: string;
 };
@@ -27,7 +27,7 @@ export default function EmpresasList({ dados }: EmpresasListProps) {
           renderItem={({ item }) => (
             <Empresas
               id={item.id}
-              nome={item.nome}
+              nome={item.name}
               cnpj={item.cnpj}
               email={item.email}
             />

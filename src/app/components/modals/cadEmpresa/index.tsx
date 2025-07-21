@@ -1,31 +1,32 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { Modal, View, Text, TextInput, TouchableOpacity } from "react-native";
+import { Modal, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { styles } from "./style";
 
 type CadEmpresaModalProps = {
   visible: boolean;
   onClose: () => void;
-  onSave?: (empresa: { nome: string; cnpj: string; email: string }) => void;
+  onSave?: (empresa: { id: string; name: string; cnpj: string; email: string }) => void;
 };
 
-export default function CadEmpresaModal({
-  visible,
-  onClose,
-  onSave,
-}: CadEmpresaModalProps) {
-  const [nome, setNome] = useState("");
+export default function CadEmpresaModal({visible,onClose,onSave,}: CadEmpresaModalProps) {
+  const [name, setName] = useState("");
   const [cnpj, setCnpj] = useState("");
   const [email, setEmail] = useState("");
 
   const handleSalvar = () => {
-    if (onSave) {
-      onSave({ nome, cnpj, email });
-    }
-    setNome("");
-    setCnpj("");
-    setEmail("");
+  if (onSave) {
+    const novaEmpresa = {
+      id: Date.now().toString(), // Gera ID único baseado no timestamp
+      name,
+      cnpj,
+      email,
+    };
+
+    onSave(novaEmpresa); // Envia empresa com id
+  }
     onClose();
-  };
+}
 
   return (
     <Modal transparent visible={visible} animationType="slide">
@@ -44,8 +45,8 @@ export default function CadEmpresaModal({
           <TextInput
             style={styles.input}
             placeholder="Nome"
-            value={nome}
-            onChangeText={setNome}
+            value={name}
+            onChangeText={setName}
           />
           <TextInput
             style={styles.input}

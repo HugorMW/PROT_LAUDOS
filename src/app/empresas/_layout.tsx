@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { Stack } from "expo-router";
-import { TouchableOpacity } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
 import CadEmpresaModal from "@/app/components/modals/cadEmpresa";
+import { empresasStorage } from "@/app/storage";
+import { AntDesign } from "@expo/vector-icons";
+import { Stack } from "expo-router";
+import React, { useState } from "react";
+import { TouchableOpacity } from "react-native";
 
 export default function LayoutEmpresas() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -38,10 +39,17 @@ export default function LayoutEmpresas() {
           }}
         />
       </Stack>
-      <CadEmpresaModal
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-      />
+<CadEmpresaModal
+  visible={modalVisible}
+  onClose={() => setModalVisible(false)}
+  onSave={async (empresa) => {
+    try {
+      await empresasStorage.save(empresa);
+    } catch (error) {
+      console.error("Erro ao salvar:", error);
+    }
+  }}
+/>
     </>
   );
 }

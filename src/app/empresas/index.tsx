@@ -1,18 +1,17 @@
-import React from "react";
-import { TextInput, Text, View } from "react-native";
+import React, { useState } from "react";
+import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useState } from "react";
-import { styleEmpresas } from "./style";
 import { dataEmpresas } from "../utils/empresas/data";
+import { styleEmpresas } from "./style";
 
 import EmpresasList from "@/app/components/empresas";
-import Search from "../components/search";
 import { StrictMode } from "react";
+import Search from "../components/search";
 
 export default function Empresas() {
   const [search, setSearch] = useState("");
   const empresasFiltradas = dataEmpresas.filter((e) =>
-    (e.nome + e.cnpj + e.email).toLowerCase().includes(search.toLowerCase())
+    (e.name + e.cnpj + e.email).toLowerCase().includes(search.toLowerCase())
   );
 
   return (
