@@ -1,6 +1,8 @@
 import Empresas from "@/app/components/empresa";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, Text, View } from "react-native";
+import { empresasStorage, EmpresasStorage } from "@/app/storage";
+import { styleEmpresas } from "../empresa/style";
 
 type Empresa = {
   id: string;
@@ -14,6 +16,21 @@ type EmpresasListProps = {
 };
 
 export default function EmpresasList({ dados }: EmpresasListProps) {
+  const [empresas, setEmpresas] = useState<EmpresasStorage[]>([]);
+
+  async function getEmpresas() {
+    try {
+      const empresas = await empresasStorage.get();
+      setEmpresas(empresas);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  useEffect(() => {
+    console.log("Pagina recarregada!!!");
+  }, [empresas]);
+
   return (
     <View style={{ flex: 1 }}>
       {dados.length === 0 ? (
@@ -22,7 +39,7 @@ export default function EmpresasList({ dados }: EmpresasListProps) {
         </Text>
       ) : (
         <FlatList
-          data={dados}
+          data={empresas}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <Empresas
